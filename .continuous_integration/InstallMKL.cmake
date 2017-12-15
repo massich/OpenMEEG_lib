@@ -19,24 +19,27 @@ else()
     set(MKL_INSTALLER_ARCHIVE "${MKL_BASE_NAME}.tgz")
 endif()
 
-set(MKL_BASE_URL "http://registrationcenter-download.intel.com/akdlm/irc_nas/tec")
-message("--------[ sik ]---  download: ${MKL_BASE_URL}/${MKL_URL_DIR}/${MKL_INSTALLER_ARCHIVE}")
-message("--------[ sik ]---  save: ${CMAKE_BINARY_DIR}/${MKL_INSTALLER_ARCHIVE}")
-file(DOWNLOAD "${MKL_BASE_URL}/${MKL_URL_DIR}/${MKL_INSTALLER_ARCHIVE}" ${CMAKE_BINARY_DIR}/${MKL_INSTALLER_ARCHIVE}
-     STATUS result)
-list(GET result 0 error_code)
-if (NOT ${error_code} STREQUAL "0")
-    message(FATAL_ERROR "Could not download MKL install script. If no network connexion please provide MKL_DIR or environment {MKLDIR}")
-endif()
+# set(MKL_BASE_URL "http://registrationcenter-download.intel.com/akdlm/irc_nas/tec")
+# file(DOWNLOAD "${MKL_BASE_URL}/${MKL_URL_DIR}/${MKL_INSTALLER_ARCHIVE}" ${CMAKE_BINARY_DIR}/${MKL_INSTALLER_ARCHIVE}
+#      STATUS result)
+# list(GET result 0 error_code)
+# if (NOT ${error_code} STREQUAL "0")
+#     message(FATAL_ERROR "Could not download MKL install script. If no network connexion please provide MKL_DIR or environment {MKLDIR}")
+# endif()
 
 #   Unpack MKL in a local directory.
 
 message(STATUS "Unpacking Intel MKL")
 
+message("-----[ sik ]-- MKL_UNPACK_WORKING_DIRECTORY ${CMAKE_BINARY_DIR}")
 set(MKL_UNPACK_WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 if (WIN32)
+
+    message("-----[ sik ]-- MKL_UNPACK_WORKING_DIRECTORY ${MKL_UNPACK_WORKING_DIRECTORY}/mkl")
     set(MKL_UNPACK_WORKING_DIRECTORY ${MKL_UNPACK_WORKING_DIRECTORY}/mkl)
+    message("-----[ sik ]-- MAKE_DIRECTORY ${MKL_UNPACK_WORKING_DIRECTORY}")
     file(MAKE_DIRECTORY ${MKL_UNPACK_WORKING_DIRECTORY})
+    message("-----[ sik ]-- MKL_UNPACK_COMMAND unzip ${CMAKE_BINARY_DIR}/${MKL_INSTALLER_ARCHIVE}")
     set(MKL_UNPACK_COMMAND unzip ${CMAKE_BINARY_DIR}/${MKL_INSTALLER_ARCHIVE})
 elseif (APPLE)
     set(MKL_UNPACK_COMMAND hdiutil attach ${CMAKE_BINARY_DIR}/${MKL_INSTALLER_ARCHIVE})
@@ -68,6 +71,7 @@ else()
 endif()
 
 if (WIN32)
+    message("-----[ sik ]-- MKL_INSTALL_COMMAND ${MKL_UNPACK_WORKING_DIRECTORY}/setup.exe install --components=all -eula=accept --output=${CMAKE_BINARY_DIR}/install-mkl.log --installdir=${MKL_INSTALL_DIR}")
     set(MKL_INSTALL_COMMAND ${MKL_UNPACK_WORKING_DIRECTORY}/setup.exe install --components=all -eula=accept
                                 --output=${CMAKE_BINARY_DIR}/install-mkl.log
                                 --installdir=${MKL_INSTALL_DIR})
