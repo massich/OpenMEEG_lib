@@ -14,6 +14,7 @@ image:
 
 cache:
   - C:\cmake-3.8.0-win32-x86
+  - C:\mkl\
 
 init:
   - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
@@ -25,7 +26,13 @@ install:
         7z x -y cmake-3.8.0-win32-x86.zip -oC:\
       }
       $env:PATH="C:\cmake-3.8.0-win32-x86\bin;$env:PATH"
-      cmake -P .continuous_integration/InstallMKL.cmake 
+  - ps: |
+      if (![IO.File]::Exists("C:\mkl\w_mkl_2018.0.124.exe")) {
+        MD C:\mkl\
+        DIR C:\
+        Start-FileDownload 'http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/12079/w_mkl_2018.0.124.exe' -FileName 'C:\mkl\w_mkl_2018.0.124.exe'
+        C:\mkl\w_mkl_2018.0.124.exe
+      }
 
 before_build:
   - ps: |
