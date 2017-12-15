@@ -20,6 +20,8 @@ else()
 endif()
 
 set(MKL_BASE_URL "http://registrationcenter-download.intel.com/akdlm/irc_nas/tec")
+message("--------[ sik ]---  download: ${MKL_BASE_URL}/${MKL_URL_DIR}/${MKL_INSTALLER_ARCHIVE}")
+message("--------[ sik ]---  save: ${CMAKE_BINARY_DIR}/${MKL_INSTALLER_ARCHIVE}")
 file(DOWNLOAD "${MKL_BASE_URL}/${MKL_URL_DIR}/${MKL_INSTALLER_ARCHIVE}" ${CMAKE_BINARY_DIR}/${MKL_INSTALLER_ARCHIVE}
      STATUS result)
 list(GET result 0 error_code)
