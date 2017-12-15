@@ -33,6 +33,8 @@ install:
         Start-FileDownload 'http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/12079/w_mkl_2018.0.124.exe' -FileName 'C:\mkl\w_mkl_2018.0.124.exe'
         C:\mkl\w_mkl_2018.0.124.exe
       }
+  - ps: cmake -P .continuous_integration/InstallMKL.cmake 
+
 
 before_build:
   - ps: |
