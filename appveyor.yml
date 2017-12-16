@@ -38,12 +38,21 @@ install:
         MD C:\mkl\
         DIR C:\
         Start-FileDownload 'http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/12079/w_mkl_2018.0.124.exe' -FileName 'C:\mkl\w_mkl_2018.0.124.exe'
-        C:\mkl\w_mkl_2018.0.124.exe -s --components=all -eula=accept --output=C:\mkl\install-mkl.log --installdir='C:\Program Files (x86)\IntelSWTools'
+        C:\mkl\w_mkl_2018.0.124.exe -s -x -l c:\sik.log
       }
       else{
         ECHO 'w_mkl_2018.0.124.exe already existed'
       }
-  - C:\mkl\w_mkl_2018.0.124.exe -s --components=all -eula=accept --output=C:\mkl\install-mkl.log --installdir='C:\Program Files (x86)\IntelSWTools'
+  - ps: |
+      if (![IO.File]::Exists("C:\mkl\w_mkl_2018.0.124.exe")) {
+        ECHO 'w_mkl_2018.0.124.exe is missing'
+      }
+      else{
+        ECHO 'w_mkl_2018.0.124.exe already existed'
+      }
+  - C:\mkl\w_mkl_2018.0.124.exe -s -x -l c:\sik.log
+  - type c:\sik.log
+  # - C:\mkl\w_mkl_2018.0.124.exe -s --components=all -eula=accept --output=C:\mkl\install-mkl.log --installdir='C:\Program Files (x86)\IntelSWTools'
   # - ps: cmake -P .continuous_integration/InstallMKL.cmake 
 
 
