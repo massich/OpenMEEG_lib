@@ -27,32 +27,44 @@ install:
       }
       $env:PATH="C:\cmake-3.8.0-win32-x86\bin;$env:PATH"
   - ps: |
-      if (![IO.File]::Exists("C:\mkl\w_mkl_2018.0.124.exe")) {
+      if (![IO.File]::Exists("C:\w_mkl_2018.0.124.exe")) {
+        ECHO 'w_mkl_2018.0.124.exe does not exist. Preparing to install MKL ..'
+        Start-FileDownload 'http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/12079/w_mkl_2018.0.124.exe' -FileName 'C:\w_mkl_2018.0.124.exe'
+        # ECHO 'puta1' 
+        # $command='C:\w_mkl_2018.0.124.exe --s --l c:\sik.log'
+        # ECHO '$command'
+        # IEX '& $command'
+        # ECHO 'putaaaaaaa'
+      }
+      else{
+        ECHO 'w_mkl_2018.0.124.exe already existed'
+      }
+  - ps: |
+      if (![IO.File]::Exists("C:\w_mkl_2018.0.124.exe")) {
         ECHO 'w_mkl_2018.0.124.exe is missing'
       }
       else{
         ECHO 'w_mkl_2018.0.124.exe already existed'
       }
   - ps: |
-      if (![IO.File]::Exists("C:\mkl\w_mkl_2018.0.124.exe")) {
-        MD C:\mkl\
-        DIR C:\
-        Start-FileDownload 'http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/12079/w_mkl_2018.0.124.exe' -FileName 'C:\mkl\w_mkl_2018.0.124.exe'
-        C:\mkl\w_mkl_2018.0.124.exe -s -x -l c:\sik.log
+      if (![IO.File]::Exists("C:\sik.log")) {
+        ECHO 'sik.log is missing'
       }
       else{
-        ECHO 'w_mkl_2018.0.124.exe already existed'
+        ECHO 'sik.log already existed'
       }
+  # - C:\w_mkl_2018.0.124.exe -s -x -l c:\sik.log
+  # - type c:\sik.log
+  - C:\w_mkl_2018.0.124.exe --s --l c:\sik.log -a "--s --components=all -eula=accept --output='C:\install-mkl.log' --installdir='C:\Program Files (x86)\IntelSWTools'"
+  # --a --s --components=all -eula=accept --output='C:\install-mkl.log' --installdir='C:\Program Files (x86)\IntelSWTools'
   - ps: |
-      if (![IO.File]::Exists("C:\mkl\w_mkl_2018.0.124.exe")) {
-        ECHO 'w_mkl_2018.0.124.exe is missing'
+      if (![IO.File]::Exists("C:\sik.log")) {
+        ECHO 'sik.log is missing'
       }
       else{
-        ECHO 'w_mkl_2018.0.124.exe already existed'
+        ECHO 'sik.log already existed'
+        TYPE c:\sik.log
       }
-  - C:\mkl\w_mkl_2018.0.124.exe -s -x -l c:\sik.log
-  - type c:\sik.log
-  # - C:\mkl\w_mkl_2018.0.124.exe -s --components=all -eula=accept --output=C:\mkl\install-mkl.log --installdir='C:\Program Files (x86)\IntelSWTools'
   # - ps: cmake -P .continuous_integration/InstallMKL.cmake 
 
 
