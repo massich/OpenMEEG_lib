@@ -53,9 +53,12 @@ install:
       else{
         ECHO 'sik.log already existed'
       }
+  - C:\w_mkl_2018.0.124.exe --s --l c:\sik.log --x
+  # - type c:\sik.log
+  - C:\Users\appveyor\Downloads\Intel\w_mkl_2018.0.124\setup.exe --help
   # - C:\w_mkl_2018.0.124.exe -s -x -l c:\sik.log
   # - type c:\sik.log
-  - C:\w_mkl_2018.0.124.exe --s --l c:\sik.log -a "--components=all --eula=accept --output='C:\install-mkl.log' --installdir='C:\Program Files (x86)\IntelSWTools' --s "
+  # - C:\w_mkl_2018.0.124.exe --s --l c:\sik.log -a "--components=all --eula=accept --output='C:\install-mkl.log' --installdir='C:\Program Files (x86)\IntelSWTools' --s "
   # --a --s --components=all -eula=accept --output='C:\install-mkl.log' --installdir='C:\Program Files (x86)\IntelSWTools'
   - ps: |
       if (![IO.File]::Exists("C:\sik.log")) {
