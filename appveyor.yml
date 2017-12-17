@@ -30,8 +30,8 @@ install:
       if (![IO.File]::Exists("C:\w_mkl_2018.0.124.exe")) {
         ECHO 'w_mkl_2018.0.124.exe does not exist. Preparing to install MKL ..'
         Start-FileDownload 'http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/12079/w_mkl_2018.0.124.exe' -FileName 'C:\w_mkl_2018.0.124.exe'
-        C:\w_mkl_2018.0.124.exe --s --l c:\sik.log --x
-        C:\Users\appveyor\Downloads\Intel\w_mkl_2018.0.124\setup.exe install --components=all --eula=accept --output='C:\install-mkl.log' --installdir='C:\xxx'
+        C:\w_mkl_2018.0.124.exe -s -l c:\sik.log -a install --eula=accept --components=all --output='C:\install-mkl.log' --installdir='C:\xxx'
+        # C:\Users\appveyor\Downloads\Intel\w_mkl_2018.0.124\setup.exe install --components=all --eula=accept --output='C:\install-mkl.log' --installdir='C:\xxx'
         ECHO 'done'
       }
       else{
