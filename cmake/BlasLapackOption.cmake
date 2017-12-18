@@ -5,6 +5,7 @@ set(LAPACK   USE_LAPACK)
 set(vecLib   USE_VECLIB)
 set(Auto     USE_AUTO)
 
+message('------[sik]--- I'm inside BlasLapackOption')
 # the default case is Auto unless user tells something else
 set(BLASLAPACK_IMPLEMENTATION_DEFAULT Auto)
 if (BLASLAPACK_IMPLEMENTATION)
@@ -85,3 +86,5 @@ else()
     set(BLASLAPACK_IMPLEMENTATION "LAPACK" CACHE STRING "Forced to LAPACK as no other BLASLAPACK_IMPLEMENTATION found." FORCE)
     message("Forcing BLASLAPACK_IMPLEMENTATION to LAPACK to build it as no other BLASLAPACK_IMPLEMENTATION found.")
 endif()
+
+message('------[sik]--- I'm inside BlasLapackOption [I'm going out]')
