@@ -22,6 +22,7 @@
 # OPEN - Open MPI library
 # SGI - SGI MPT Library
 
+message('------------- [sik] ---- This is FindMKL.cmake')
 set(CMAKE_FIND_DEBUG_MODE 1)
 
 # unset this variable defined in matio
